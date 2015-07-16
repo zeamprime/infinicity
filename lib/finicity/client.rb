@@ -1,5 +1,4 @@
-module Finicity
-  class Client
+module Finicity class Client
     ##
     # Attributes
     #
@@ -71,12 +70,23 @@ module Finicity
       end
     end
 
+    def add_test_user(username, first_name, last_name)
+      request = ::Finicity::V1::Request::AddTestUser.new(token, username, first_name, last_name)
+      request.log_request
+      response = request.add_customer
+      log_response(response)
+
+      if response.ok?
+        parsed_response = ::Finicity::V1::Response::Customer.parse(response.body)
+        return parsed_response
+      else
+        raise_generic_error!(response)
+      end
+    end
+
     def authenticate!
-      puts "INTO THE AUTHENTICATE MTHOD"
       request = ::Finicity::V2::Request::PartnerAuthentication.new
-      puts "THE REQUST IS: #{request}"
       response = request.authenticate
-      puts "AFTER THE RESPONSE: #{response}"
 
       if response.ok?
         parsed_response = ::Finicity::V2::Response::PartnerAuthentication.parse(response.body)
