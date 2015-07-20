@@ -28,11 +28,11 @@ module Finicity::V1
       # Instance Methods
       #
       def aggregation_success_date
-        aggreagtionSuccessDate ? ::Time.at(aggregationSuccessDate).utc : nil
+        aggregationSuccessDate ? ::Time.at(aggregationSuccessDate).utc : nil
       end
 
       def aggregation_attempt_date
-        aggreagtionAttemptDate ? ::Time.at(aggregationAttemptDate).utc : nil
+        aggregationAttemptDate ? ::Time.at(aggregationAttemptDate).utc : nil
       end
 
       def balance_date

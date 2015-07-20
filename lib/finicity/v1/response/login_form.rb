@@ -11,6 +11,7 @@ module Finicity::V1
       attribute :id
       attribute :name
       attribute :mask
+      attribute :instructions
 
       def mask?
         mask == 'true'

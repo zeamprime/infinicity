@@ -23,10 +23,8 @@ module Finicity::V1
       end
 
       def get_institutions(start, limit)
-        puts "THE NAME IS: #{institution_name}"
         query = { :start => start, :limit => limit, :search => institution_name }
-        puts "THE QUERY IS: #{query}"
-        http_client.get(url, query, headers)
+        include_http_client.get(url, query, headers)
       end
 
       def headers

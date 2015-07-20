@@ -1,7 +1,6 @@
 require 'finicity/v1/request/activate_accounts'
 require 'finicity/v1/request/activate_accounts_with_mfa'
 require 'finicity/v1/request/add_customer'
-require 'finicity/v1/request/add_test_user'
 require 'finicity/v1/request/delete_account'
 require 'finicity/v1/request/delete_customer'
 require 'finicity/v1/request/discover_accounts'

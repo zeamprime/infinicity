@@ -56,22 +56,8 @@ module Finicity class Client
       end
     end
 
-    def add_customer(user_guid)
-      request = ::Finicity::V1::Request::AddCustomer.new(token, user_guid)
-      request.log_request
-      response = request.add_customer
-      log_response(response)
-
-      if response.ok?
-        parsed_response = ::Finicity::V1::Response::Customer.parse(response.body)
-        return parsed_response
-      else
-        raise_generic_error!(response)
-      end
-    end
-
-    def add_test_user(username, first_name, last_name)
-      request = ::Finicity::V1::Request::AddTestUser.new(token, username, first_name, last_name)
+    def add_customer(username, first_name, last_name, type)
+      request = ::Finicity::V1::Request::AddCustomer.new(token, username, first_name, last_name, type)
       request.log_request
       response = request.add_customer
       log_response(response)
@@ -212,14 +198,14 @@ module Finicity class Client
       end
     end
 
-    def get_customers
+    def get_customers(type)
       request = ::Finicity::V1::Request::GetCustomers.new(token)
       start = 1
       limit = 25
       customers = []
 
       loop do
-        response = request.get_customers(start, limit)
+        response = request.get_customers(start, limit, type)
 
         if response.ok?
           parsed_response = ::Finicity::V1::Response::Customers.parse(response.body)
@@ -275,7 +261,8 @@ module Finicity class Client
     def get_login_form(institution_id)
       request = ::Finicity::V1::Request::GetLoginForm.new(token, institution_id)
       response = request.get_login_form
-
+      log_response(response)
+      
       if response.ok?
         parsed_response = ::Finicity::V1::Response::LoginForm.parse(response.body)
         return parsed_response.login_fields

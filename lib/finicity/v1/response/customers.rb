@@ -7,7 +7,7 @@ module Finicity::V1
       # Saxomattic Attributes
       #
       attribute :username
-      attribute :email
+      attribute :type
       attribute :firstName, :as => :first_name
       attribute :lastName, :as => :last_name
       attribute :id

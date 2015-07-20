@@ -5,13 +5,13 @@ module Finicity::V1
       extend ::HTTPClient::IncludeClient
       include_http_client do |client|
         client.cookie_manager = nil
+        client.proxy = ENV['QUOTAGUARDSTATIC_URL'] if Rails.env.production?
       end
 
       ##
       # Attributes
       #
-      attr_accessor :token,
-        :customer_id
+      attr_accessor :token, :customer_id
 
       ##
       # Instance Methods
@@ -33,12 +33,7 @@ module Finicity::V1
       end
 
       def url
-        ::URI.join(
-          ::Finicity.config.base_url,
-          'v1/',
-          'customers/',
-          customer_id.to_s
-        )
+        ::URI.join(::Finicity.config.base_url, 'v1/','customers/', customer_id.to_s)
       end
     end
   end

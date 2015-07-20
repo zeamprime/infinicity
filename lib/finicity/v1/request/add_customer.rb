@@ -5,20 +5,23 @@ module Finicity::V1
       extend ::HTTPClient::IncludeClient
       include_http_client do |client|
         client.cookie_manager = nil
+        client.proxy = ENV['QUOTAGUARDSTATIC_URL'] if Rails.env.production?
       end
 
       ##
       # Attributes
       #
-      attr_accessor :token,
-        :user_guid
+      attr_accessor :token, :username, :finicity_user_type, :first_name, :last_name
 
       ##
       # Instance Methods
       #
-      def initialize(token, user_guid)
+      def initialize(token, username, first_name, last_name, finicity_user_type)
         @token = token
-        @user_guid = user_guid
+        @username = username
+        @first_name = first_name
+        @last_name = last_name
+        @finicity_user_type = finicity_user_type.nil? ? :active : finicity_user_type
       end
 
       def add_customer
@@ -27,10 +30,9 @@ module Finicity::V1
 
       def body
         {
-          'username' => user_guid,
-          'email' => "#{user_guid}@mx.com",
-          'firstName' => user_guid,
-          'lastName' => user_guid
+          'username' => @username,
+          'firstName' => @first_name,
+          'lastName' => @last_name
         }.to_xml(:root => 'customer')
       end
 
@@ -43,12 +45,8 @@ module Finicity::V1
       end
 
       def url
-        ::URI.join(
-          ::Finicity.config.base_url,
-          'v1/',
-          'customers/',
-          'active'
-        )
+        path = @finicity_user_type == :active ? 'active' : 'testing'
+        ::URI.join(::Finicity.config.base_url,'v1/',"customers/#{path}")
       end
     end
   end

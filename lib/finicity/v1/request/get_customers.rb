@@ -5,6 +5,7 @@ module Finicity::V1
       extend ::HTTPClient::IncludeClient
       include_http_client do |client|
         client.cookie_manager = nil
+        client.proxy = ENV['QUOTAGUARDSTATIC_URL'] if Rails.env.production?
       end
 
       ##
@@ -19,8 +20,8 @@ module Finicity::V1
         @token = token
       end
 
-      def get_customers(start, limit)
-        query = { :start => start, :limit => limit }
+      def get_customers(start, limit, type)
+        query = { :start => start, :limit => limit, :type => type }
         http_client.get(url, query, headers)
       end
 
