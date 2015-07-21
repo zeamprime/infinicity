@@ -5,7 +5,7 @@ module Finicity::V1
       extend ::HTTPClient::IncludeClient
       include_http_client do |client|
         client.cookie_manager = nil
-        client.proxy = ENV['QUOTAGUARDSTATIC_URL']
+        client.proxy = ENV['QUOTAGUARDSTATIC_URL'] if Rails.env.production?
       end
 
       ##

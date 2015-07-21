@@ -262,7 +262,7 @@ module Finicity class Client
       request = ::Finicity::V1::Request::GetLoginForm.new(token, institution_id)
       response = request.get_login_form
       log_response(response)
-      
+
       if response.ok?
         parsed_response = ::Finicity::V1::Response::LoginForm.parse(response.body)
         return parsed_response.login_fields
