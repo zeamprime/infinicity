@@ -271,14 +271,16 @@ module Finicity class Client
       end
     end
 
-    def get_transactions(customer_id, account_id, from_date, to_date)
-      request = ::Finicity::V1::Request::GetTransactions.new(token, customer_id, account_id, from_date, to_date)
+    def get_transactions(customer_id, account_id, from_date, to_date, 
+    		start = 1, limit = 1000, sort = "desc")
+      # Note: V1 will be deprecated Jan 2016.
+      request = ::Finicity::V2::Request::GetTransactions.new(token, customer_id, account_id, from_date, to_date, start, limit, sort)
       request.log_request
       response = request.get_transactions
       log_response(response)
 
       if response.ok?
-        parsed_response = ::Finicity::V1::Response::Transactions.parse(response.body)
+        parsed_response = ::Finicity::V2::Response::Transactions.parse(response.body)
         return parsed_response.transactions
       else
         raise_generic_error!(response)
