@@ -25,7 +25,7 @@ module Finicity::V2
       attribute :transaction, :elements => true, :class => ::Finicity::V2::Response::Transaction, :as => :transactions
       attribute :found, :type => ::Integer
       attribute :displaying, :type => ::Integer
-      attribute :moreAvailable, :type => ::Boolean
+      attribute :moreAvailable, :type => Boolean
       # could also capture fromDate, toDate, and sort but those are input params so no point.
     end
   end
