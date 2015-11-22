@@ -16,7 +16,7 @@ module Finicity::V2
         :to_date,
         :start, #optional
         :limit,	#optional
-        :sort	#optional
+        :sort,	#optional
         :token
 
       ##
