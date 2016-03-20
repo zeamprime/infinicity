@@ -8,6 +8,8 @@ module Finicity::V1
       #
       attribute :text
       attribute :choice, :elements => true, :as => :choices
+      attribute :image
+      attribute :imageChoice, :elements => true, :as => :image_choices
     end
 
     class Mfa
