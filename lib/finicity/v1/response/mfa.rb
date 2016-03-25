@@ -7,9 +7,19 @@ module Finicity::V1
       # Saxomattic Attributes
       #
       attribute :text
-      attribute :choice, :elements => true, :as => :choices
+      attribute :choice, :elements => true, :as => :choices, :class => ::Finicity::V1::Response::Choice
       attribute :image
-      attribute :imageChoice, :elements => true, :as => :image_choices
+      attribute :imageChoice, :elements => true, :as => :image_choices, :class => ::Finicity::V1::Response::Choice
+    end
+    
+    ##
+    # imageChoice and choice elements both have some text/data as well as a "value" attribute.
+    ##
+    class Choice
+      include ::Saxomattic
+      
+      attribute :data
+      attribute :value, :attribute => true
     end
 
     class Mfa
