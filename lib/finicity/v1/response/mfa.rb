@@ -7,7 +7,7 @@ module Finicity::V1
     class Choice
       include ::Saxomattic
       
-      attribute :data
+      attribute :data, :value => true
       attribute :value, :attribute => true
     end
     
